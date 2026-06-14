@@ -424,7 +424,7 @@ function renderMascotStrip() {
       <div class="pose-strip" aria-label="NOVA mascot states">
         ${NOVA_POSES.map((pose) => `
           <figure class="pose-card">
-            <img src="${assetUrl(`nova-poses/${pose}.png`)}" alt="NOVA ${pose} state" loading="lazy" decoding="async" />
+            <img src="${assetUrl(`nova-poses/${pose}.png`)}" alt="NOVA ${pose} state" loading="eager" decoding="async" />
             <figcaption>${escapeHtml(titleCase(pose))}</figcaption>
           </figure>
         `).join('')}
