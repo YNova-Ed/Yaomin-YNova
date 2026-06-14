@@ -1,5 +1,18 @@
 [
   {
+    "id": "task-intern-handoff-review",
+    "title": "Read the YNova MBS intern review and handoff guide",
+    "area": "Onboarding",
+    "priority": "High",
+    "status": "Todo",
+    "assignee": "Yaomin",
+    "assignedBy": "Tamil",
+    "due": "2026-06-18",
+    "docId": "ynova-mbs-intern-handoff-review",
+    "notes": "Use the guide to explain the product loop, frontend/backend boundaries, review checklist, and first 30-day learning path back to Tamil.",
+    "reviewLog": []
+  },
+  {
     "id": "task-full-onboarding-guide",
     "title": "Read the complete YNova app onboarding guide and mark unknowns",
     "area": "Onboarding",

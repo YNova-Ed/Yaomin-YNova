@@ -22,6 +22,17 @@
     "tags": ["onboarding", "ynova", "mbs", "product", "architecture"]
   },
   {
+    "id": "ynova-mbs-intern-handoff-review",
+    "title": "YNova MBS Intern Review And Handoff Guide",
+    "section": "Onboarding",
+    "path": "docs/onboarding/ynova_mbs_intern_handoff_review.md",
+    "summary": "Principal-engineer review and handoff guide covering the MBS product loop, codebase map, frontend/backend boundaries, review checklist, risks, and first 30 days for Yaomin.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-15",
+    "tags": ["onboarding", "handoff", "mbs", "review", "architecture"]
+  },
+  {
     "id": "code-guidelines",
     "title": "Engineering Code Guidelines",
     "section": "Engineering",

@@ -53,6 +53,7 @@ Yaomin-YNova/
       code_guidelines.md
     onboarding/
       collaboration_guidelines.md
+      ynova_mbs_intern_handoff_review.md
       ynova_full_onboarding_guide.md
     product/
       free_shared_updates_architecture.md
