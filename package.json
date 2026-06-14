@@ -7,6 +7,9 @@
     "dev": "vite --host 127.0.0.1",
     "build": "vite build && node scripts/copy-docs.mjs",
     "preview": "vite preview --host 127.0.0.1",
+    "seed:issues": "node scripts/seed-github-issues.mjs",
+    "sync:issue-labels": "node scripts/sync-issue-labels.mjs",
+    "weekly:update": "node scripts/create-weekly-update.mjs",
     "test": "node scripts/validate-content.mjs"
   },
   "dependencies": {

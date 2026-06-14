@@ -1,0 +1,66 @@
+name: Task
+description: Create a shared Yaomin onboarding or product handoff task.
+title: "[Task] "
+labels: ["task", "status:todo", "priority:medium"]
+body:
+  - type: markdown
+    attributes:
+      value: The dashboard reads task status from GitHub labels. The label-sync workflow applies area and priority labels from this form after the issue is created. Use status labels or close the issue to update task status.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - onboarding
+        - product
+        - engineering
+        - ai-architecture
+        - design
+        - operations
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - high
+        - medium
+        - low
+    validations:
+      required: true
+  - type: input
+    id: due
+    attributes:
+      label: Due date
+      description: Use YYYY-MM-DD.
+      placeholder: "2026-06-21"
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What outcome should this task produce?
+      placeholder: "Yaomin understands the MBS training flow and writes three open questions."
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why does this matter?
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: What must be true before this task is done?
+      value: |
+        - [ ]
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: Relevant docs, repo paths, PRs, or screenshots.

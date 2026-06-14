@@ -44,6 +44,17 @@
     "tags": ["mbs", "architecture", "frontend", "backend"]
   },
   {
+    "id": "free-shared-updates-architecture",
+    "title": "Free Shared Updates Architecture",
+    "section": "Product",
+    "path": "docs/product/free_shared_updates_architecture.md",
+    "summary": "How the static GitHub Pages dashboard gets durable shared task and weekly progress updates for free using GitHub Issues and Actions.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["github", "issues", "weekly-updates", "architecture"]
+  },
+  {
     "id": "agents",
     "title": "AI Agent System",
     "section": "AI Architecture",

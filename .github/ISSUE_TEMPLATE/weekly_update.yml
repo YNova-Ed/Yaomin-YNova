@@ -1,0 +1,43 @@
+name: Weekly progress update
+description: Create a weekly Yaomin onboarding progress update.
+title: "[Weekly] Progress Update - "
+labels: ["weekly-update"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One short paragraph on the week.
+    validations:
+      required: true
+  - type: textarea
+    id: completed
+    attributes:
+      label: Completed
+      value: |
+        - 
+  - type: textarea
+    id: in_progress
+    attributes:
+      label: In progress
+      value: |
+        - 
+  - type: textarea
+    id: blockers
+    attributes:
+      label: Blockers
+      value: |
+        - None
+  - type: textarea
+    id: decisions
+    attributes:
+      label: Decisions needed from Tamil
+      value: |
+        - None
+  - type: textarea
+    id: next_week
+    attributes:
+      label: Next week focus
+      value: |
+        - 
+

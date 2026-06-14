@@ -34,8 +34,14 @@ GitHub Pages deployment is handled by `.github/workflows/pages.yml` on pushes to
 ```text
 Yaomin-YNova/
   .github/
+    ISSUE_TEMPLATE/
+      config.yml
+      task.yml
+      weekly_update.yml
     workflows/
       pages.yml
+      sync-issue-labels.yml
+      weekly-progress.yml
   docs/
     ai_architecture/
       Agents.md
@@ -49,6 +55,7 @@ Yaomin-YNova/
       collaboration_guidelines.md
       ynova_full_onboarding_guide.md
     product/
+      free_shared_updates_architecture.md
       ynova_mbs_architecture.md
   public/
     nova-brand/
@@ -72,6 +79,9 @@ Yaomin-YNova/
       wave.png
   scripts/
     copy-docs.mjs
+    create-weekly-update.mjs
+    seed-github-issues.mjs
+    sync-issue-labels.mjs
     validate-content.mjs
   src/
     data/
@@ -93,14 +103,39 @@ Yaomin-YNova/
 
 - Static dashboard first: GitHub Pages can host it with no server cost or secrets.
 - Markdown is the source of truth for durable onboarding knowledge.
-- localStorage is the task state layer until a real GitHub Issues, Linear, or Supabase integration is explicitly needed.
+- localStorage is the draft task state layer for this browser.
+- GitHub Issues is the free shared task and weekly update layer for Tamil and Yaomin.
 - Lightweight static authentication gates the UI for Tamil and Yaomin, but does not claim to secure confidential data.
 - NOVA mascot assets are copied from YNova MBS so the hub keeps the same product identity without inventing a separate brand.
 - The dashboard imports markdown with Vite `?raw` for fast in-app navigation and copies the `docs/` directory into `dist/docs` during build so raw markdown links also work on GitHub Pages.
+
+## Shared Updates
+
+The dashboard reads GitHub Issues through the public GitHub API and renders a shared progress panel. It does not write to GitHub from browser JavaScript because static sites cannot safely hold write tokens.
+
+```text
+GitHub Pages dashboard
+  |
+  +-- localStorage
+  |     browser-only draft tasks
+  |
+  +-- GitHub Issues API
+        shared task issues
+        weekly progress issues
+        review comments
+```
+
+Create shared work with the `GitHub task` button in the dashboard or the issue template in GitHub. `.github/workflows/sync-issue-labels.yml` keeps area and priority labels aligned with the issue form. Weekly progress is created by `.github/workflows/weekly-progress.yml` every Monday morning New Zealand time and can also be run manually from the Actions tab.
+
+To seed non-sensitive onboarding tasks into GitHub Issues from the local task list:
+
+```bash
+GITHUB_REPOSITORY=YNova-Ed/Yaomin-YNova GITHUB_TOKEN=$(gh auth token) npm run seed:issues
+```
 
 ## Operational Notes
 
 - Run `npm test` before publishing. The validation script checks knowledge-base metadata, task references, and required mascot assets.
 - Do not put credentials, learner data, Supabase keys, exported transcripts, or production screenshots into this repository.
 - When adding a new markdown document, add metadata in `src/data/knowledge-base.json`, add a loader in `src/data/kb.js`, and connect any seed tasks through `docId`.
-- If the dashboard later needs shared task state, use GitHub Issues or Linear first. Do not add a database just to synchronize a small intern onboarding board.
+- If the dashboard later needs private shared state, use Supabase Auth and Postgres RLS before storing sensitive data here.

@@ -10,6 +10,9 @@ const THEME_STORAGE_KEY = 'yaomin-ynova.theme.v1'
 const SESSION_STORAGE_KEY = 'yaomin-ynova.session.v1'
 const AUTH_SALT = 'yaomin-ynova-static-auth-v1'
 const BASE_URL = import.meta.env.BASE_URL || './'
+const GITHUB_REPO = 'YNova-Ed/Yaomin-YNova'
+const GITHUB_WEB_URL = `https://github.com/${GITHUB_REPO}`
+const GITHUB_ISSUES_API = `https://api.github.com/repos/${GITHUB_REPO}/issues?state=all&per_page=100`
 const STATUS_ORDER = ['Todo', 'In Progress', 'In Review', 'Done']
 const PRIORITY_ORDER = ['High', 'Medium', 'Low']
 const AUTH_ACCOUNTS = [
@@ -63,6 +66,12 @@ const state = {
   tasks: loadTasks(),
   session: loadSession(),
   authError: '',
+  github: {
+    status: 'idle',
+    issues: [],
+    error: '',
+    loadedAt: '',
+  },
   selectedDocId: 'ynova-mbs-architecture',
   selectedTaskId: null,
   statusFilter: 'All',
@@ -75,6 +84,9 @@ const state = {
 
 applyTheme(state.theme)
 selectDoc(state.selectedDocId)
+if (state.session) {
+  void loadGitHubIssues()
+}
 
 app.addEventListener('click', (event) => {
   const docButton = event.target.closest('[data-doc-id]')
@@ -120,6 +132,9 @@ app.addEventListener('click', (event) => {
     applyTheme(state.theme)
     render()
   }
+  if (action === 'refresh-github') {
+    void loadGitHubIssues()
+  }
   if (action === 'logout') {
     localStorage.removeItem(SESSION_STORAGE_KEY)
     state.session = null
@@ -162,6 +177,7 @@ app.addEventListener('submit', async (event) => {
     state.session = session
     state.authError = ''
     localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session))
+    void loadGitHubIssues()
     render()
     return
   }
@@ -255,6 +271,7 @@ function render() {
       <main class="workspace" id="main-content">
         ${renderHeader(stats)}
         ${renderOverview(stats)}
+        ${renderSharedUpdates()}
         ${renderMascotStrip()}
         ${renderNextFocus(nextFocus)}
         ${renderAssignmentConsole()}
@@ -380,12 +397,87 @@ function renderHeader(stats) {
           <span>Completion</span>
           <strong>${stats.completion}%</strong>
         </div>
-        <a class="primary-button" href="https://github.com/YNova-Ed/Yaomin-YNova" target="_blank" rel="noreferrer">
+        <a class="primary-button" href="${GITHUB_WEB_URL}" target="_blank" rel="noreferrer">
           <i data-lucide="github" aria-hidden="true"></i>
           <span>GitHub</span>
         </a>
       </div>
     </header>
+  `
+}
+
+function renderSharedUpdates() {
+  const taskIssues = state.github.issues.filter((issue) => issue.kind === 'task')
+  const weeklyUpdates = state.github.issues.filter((issue) => issue.kind === 'weekly-update')
+  const openTasks = taskIssues.filter((issue) => issue.state === 'open' && issue.status !== 'Done')
+  const doneTasks = taskIssues.filter((issue) => issue.state === 'closed' || issue.status === 'Done')
+  const latestWeekly = weeklyUpdates[0]
+  const statusText = state.github.status === 'loading'
+    ? 'Loading GitHub updates...'
+    : state.github.status === 'error'
+      ? state.github.error
+      : state.github.loadedAt
+        ? `Synced ${formatDateTime(state.github.loadedAt)}`
+        : 'Not synced yet'
+
+  return `
+    <section class="panel shared-updates" aria-labelledby="shared-updates-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="shared-updates-title">Shared Weekly And Task Updates</h2>
+          <p>Free durable updates come from GitHub Issues. Local dashboard edits still stay in this browser until exported or copied into an issue.</p>
+          <p class="inline-note">${escapeHtml(statusText)}</p>
+        </div>
+        <div class="button-row">
+          <button class="secondary-button" type="button" data-action="refresh-github">
+            <i data-lucide="refresh-cw" aria-hidden="true"></i>
+            <span>Refresh</span>
+          </button>
+          <a class="secondary-button" href="${GITHUB_WEB_URL}/issues/new?template=task.yml" target="_blank" rel="noreferrer">
+            <i data-lucide="plus" aria-hidden="true"></i>
+            <span>GitHub task</span>
+          </a>
+          <a class="secondary-button" href="${GITHUB_WEB_URL}/issues/new?template=weekly_update.yml" target="_blank" rel="noreferrer">
+            <i data-lucide="calendar-plus" aria-hidden="true"></i>
+            <span>Weekly update</span>
+          </a>
+        </div>
+      </div>
+      <div class="sync-grid">
+        <article>
+          <span>Open GitHub Tasks</span>
+          <strong>${openTasks.length}</strong>
+        </article>
+        <article>
+          <span>Completed GitHub Tasks</span>
+          <strong>${doneTasks.length}</strong>
+        </article>
+        <article>
+          <span>Weekly Updates</span>
+          <strong>${weeklyUpdates.length}</strong>
+        </article>
+      </div>
+      ${latestWeekly ? `
+        <a class="weekly-card" href="${escapeAttribute(latestWeekly.url)}" target="_blank" rel="noreferrer">
+          <span>Latest weekly update</span>
+          <strong>${escapeHtml(latestWeekly.title)}</strong>
+          <p>${escapeHtml(latestWeekly.excerpt)}</p>
+        </a>
+      ` : `
+        <p class="empty-state">No weekly update issue found yet. Use the weekly update button or wait for the scheduled workflow.</p>
+      `}
+      ${taskIssues.length > 0 ? `
+        <div class="github-task-list" aria-label="Live GitHub task issues">
+          ${taskIssues.slice(0, 6).map((issue) => `
+            <a href="${escapeAttribute(issue.url)}" target="_blank" rel="noreferrer">
+              <span class="priority-dot priority-${issue.priority.toLowerCase()}"></span>
+              <span>${escapeHtml(issue.title)}</span>
+              <strong>${escapeHtml(issue.status)}</strong>
+            </a>
+          `).join('')}
+        </div>
+      ` : ''}
+    </section>
   `
 }
 
@@ -835,6 +927,68 @@ async function authenticate(rawEmail, password) {
     role: account.role,
     loginAt: new Date().toISOString(),
   }
+}
+
+async function loadGitHubIssues() {
+  state.github = { ...state.github, status: 'loading', error: '' }
+  render()
+  try {
+    const response = await fetch(GITHUB_ISSUES_API, {
+      headers: { Accept: 'application/vnd.github+json' },
+      cache: 'no-store',
+    })
+    if (!response.ok) throw new Error(`GitHub returned ${response.status}`)
+    const issues = await response.json()
+    state.github = {
+      status: 'ready',
+      issues: issues
+        .filter((issue) => !issue.pull_request)
+        .map(mapGitHubIssue)
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()),
+      error: '',
+      loadedAt: new Date().toISOString(),
+    }
+  } catch (error) {
+    state.github = {
+      ...state.github,
+      status: 'error',
+      error: error instanceof Error ? error.message : 'Could not load GitHub issues.',
+    }
+  }
+  render()
+}
+
+function mapGitHubIssue(issue) {
+  const labels = (issue.labels || []).map((label) => typeof label === 'string' ? label : label.name).filter(Boolean)
+  const normalizedLabels = labels.map((label) => label.toLowerCase())
+  return {
+    id: `github-${issue.number}`,
+    number: issue.number,
+    title: issue.title,
+    body: issue.body || '',
+    excerpt: (issue.body || '').replace(/\s+/g, ' ').trim().slice(0, 180),
+    url: issue.html_url,
+    state: issue.state,
+    kind: normalizedLabels.includes('weekly-update') ? 'weekly-update' : normalizedLabels.includes('task') ? 'task' : 'other',
+    status: issue.state === 'closed' ? 'Done' : labelStatus(normalizedLabels),
+    priority: labelPriority(normalizedLabels),
+    labels,
+    updatedAt: issue.updated_at,
+    createdAt: issue.created_at,
+  }
+}
+
+function labelStatus(labels) {
+  if (labels.includes('status:done')) return 'Done'
+  if (labels.includes('status:in-review')) return 'In Review'
+  if (labels.includes('status:in-progress')) return 'In Progress'
+  return 'Todo'
+}
+
+function labelPriority(labels) {
+  if (labels.includes('priority:high')) return 'High'
+  if (labels.includes('priority:low')) return 'Low'
+  return 'Medium'
 }
 
 async function sha256(value) {
