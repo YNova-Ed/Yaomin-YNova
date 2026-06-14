@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-05-11T09:30:14+12:00",
+  "model": "codex-built-in-image_gen",
+  "generation_mode": "imagegen skill; distinct NOVA furry star mascot pose prompts; flat #00ff00 chroma-key source images with local alpha removal; 640px optimized transparent PNGs",
+  "prompt_spec": "current Codex prompt set: furry golden NOVA star mascot with sky-blue speech-bubble charm, one prompt per app state",
+  "dimensions": "640x640",
+  "format": "png",
+  "reference_sheet_seed": null,
+  "reference_sheet": {
+    "file": "_reference.png",
+    "seed": null,
+    "status": "regenerated",
+    "sha256": "d1cdc348f33b76ef75193067eace6907c676eb3968f55a29ce47e5b343f550f6"
+  },
+  "poses": {
+    "idle": {
+      "file": "idle.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "3b21d088421057da70f2c5985f1e201f3fb31dec80142bbc547a7e1fb8549655"
+    },
+    "wave": {
+      "file": "wave.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "83b06332c855e0e6b34e858846ea09ebcb5571f7c23b86b7f5420c2988abb896"
+    },
+    "listening": {
+      "file": "listening.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "c7622b51dc3e9acfc60126ad58a4ad03815a5ae72e0878f614e936685f918ab1"
+    },
+    "thinking": {
+      "file": "thinking.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "43f1933f6b1a320799de299840774501eef76c078b3f0e6ac5f6053cfe8abeb3"
+    },
+    "encouraging": {
+      "file": "encouraging.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "5ed09acbb7c1e33c4eef28b42b67e57707f7c93ad01b738f798d8808e1cb0492"
+    },
+    "celebrating": {
+      "file": "celebrating.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "0f7f767ba92d269ba5cec416118a65e667a1e9a9c17fdc27a183835d38b95798"
+    },
+    "correcting": {
+      "file": "correcting.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "beb0d0da28e444cf1dcf2e5fba1b8deeb23c2ecf0664abe781fcdde769eadac4"
+    },
+    "reading": {
+      "file": "reading.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "e43cf794b41a46f20290f4dacc986d32dbc762e21efbd52f5a3ca8c9834d2b71"
+    },
+    "pointing": {
+      "file": "pointing.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "ec2d03eedcc213f4b1c1aa5facbcee08ffd87bf1f84018458dbbe911d07143cd"
+    },
+    "sleeping": {
+      "file": "sleeping.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "019e3fffc24ffd29c6a1c0cf6c9f6954ed70826120986a062cb9a624074ab74c"
+    },
+    "surprised": {
+      "file": "surprised.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "3f60907fe7ec6277828e15a36f1bfd6acb8ff40feeeb99c8ced5ff4e519c5454"
+    },
+    "apologetic": {
+      "file": "apologetic.png",
+      "seed": null,
+      "regenerated": 1,
+      "status": "regenerated",
+      "sha256": "7ebae12f684b167e2b0ca5e7fa2033d59523c2d10b61f9c6b9f723361ee03568"
+    }
+  }
+}

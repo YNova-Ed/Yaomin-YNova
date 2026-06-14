@@ -1,0 +1,79 @@
+[
+  {
+    "id": "collaboration-guidelines",
+    "title": "Collaboration Guidelines",
+    "section": "Onboarding",
+    "path": "docs/onboarding/collaboration_guidelines.md",
+    "summary": "How Yaomin and Tamil should communicate, review work, make decisions, and run weekly handoffs.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["onboarding", "reviews", "handoff"]
+  },
+  {
+    "id": "ynova-full-onboarding",
+    "title": "Complete YNova App Onboarding Guide",
+    "section": "Onboarding",
+    "path": "docs/onboarding/ynova_full_onboarding_guide.md",
+    "summary": "A simple-to-ultra-detailed guide to the YNova product, MBS codebase, learner journey, AI architecture, design system, and first 30 days.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["onboarding", "ynova", "mbs", "product", "architecture"]
+  },
+  {
+    "id": "code-guidelines",
+    "title": "Engineering Code Guidelines",
+    "section": "Engineering",
+    "path": "docs/engineering/code_guidelines.md",
+    "summary": "Strict engineering practices, Git workflow, testing gates, accessibility rules, and production standards.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["engineering", "git", "quality"]
+  },
+  {
+    "id": "ynova-mbs-architecture",
+    "title": "YNova MBS Architecture",
+    "section": "Product",
+    "path": "docs/product/ynova_mbs_architecture.md",
+    "summary": "A structural overview of the YNova MBS app, its frontend, backend, data model, AI flows, and operating boundaries.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["mbs", "architecture", "frontend", "backend"]
+  },
+  {
+    "id": "agents",
+    "title": "AI Agent System",
+    "section": "AI Architecture",
+    "path": "docs/ai_architecture/Agents.md",
+    "summary": "How Codex, Claude, Cursor, Copilot, NOVA, and backend AI services should cooperate without duplicating logic.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["agents", "codex", "nova", "orchestration"]
+  },
+  {
+    "id": "claude",
+    "title": "Claude Operating Guide",
+    "section": "AI Architecture",
+    "path": "docs/ai_architecture/Claude.md",
+    "summary": "How Claude should act as CTO-level planning, critique, review, and implementation partner for YNova.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["claude", "planning", "review"]
+  },
+  {
+    "id": "ynova-theme-mascot",
+    "title": "YNova Mascot and Theme",
+    "section": "Design",
+    "path": "docs/design/ynova_mascot_and_theme.md",
+    "summary": "NOVA mascot states, Clay Bright design tokens, and guidance for keeping Yaomin-YNova visually aligned with MBS.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-14",
+    "tags": ["nova", "mascot", "theme", "design"]
+  }
+]
