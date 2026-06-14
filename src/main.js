@@ -380,7 +380,7 @@ function renderHeader(stats) {
           <span>Completion</span>
           <strong>${stats.completion}%</strong>
         </div>
-        <a class="primary-button" href="https://github.com/GTamilSelvan07/Yaomin-YNova" target="_blank" rel="noreferrer">
+        <a class="primary-button" href="https://github.com/YNova-Ed/Yaomin-YNova" target="_blank" rel="noreferrer">
           <i data-lucide="github" aria-hidden="true"></i>
           <span>GitHub</span>
         </a>
