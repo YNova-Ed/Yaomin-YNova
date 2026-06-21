@@ -7,7 +7,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-18",
+    "due": "2026-06-24",
     "docId": "ynova-mbs-intern-handoff-review",
     "notes": "Use the guide to explain the product loop, frontend/backend boundaries, review checklist, and first 30-day learning path back to Tamil.",
     "reviewLog": []
@@ -20,7 +20,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-18",
+    "due": "2026-06-24",
     "docId": "ynova-full-onboarding",
     "notes": "Read simple overview first, then product architecture, then ultra-detailed engineering sections. Add review notes for unclear areas.",
     "reviewLog": []
@@ -33,7 +33,7 @@
     "status": "In Progress",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-18",
+    "due": "2026-06-25",
     "docId": "ynova-mbs-architecture",
     "notes": "Focus on route structure, stores, backend boundaries, and why scoring logic must not be duplicated."
   },
@@ -45,7 +45,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-19",
+    "due": "2026-06-26",
     "docId": "code-guidelines",
     "notes": "Use the repo commands, record missing docs, and separate actual blockers from first-time setup confusion."
   },
@@ -57,7 +57,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-21",
+    "due": "2026-06-29",
     "docId": "agents",
     "notes": "Produce a short diagram of human review gates, repo-writing agents, and runtime AI features."
   },
@@ -69,7 +69,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-22",
+    "due": "2026-06-30",
     "docId": "collaboration-guidelines",
     "notes": "Define agenda, artifacts, decision log location, and escalation rules."
   },
@@ -81,7 +81,7 @@
     "status": "In Review",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-23",
+    "due": "2026-07-01",
     "docId": "ynova-theme-mascot",
     "notes": "Keep the mascot useful. Avoid decorative overuse in operational docs and dashboards."
   },
@@ -93,7 +93,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-24",
+    "due": "2026-07-02",
     "docId": "ynova-mbs-architecture",
     "notes": "Tie requirements to current TASK_TODO.md, affected routes, backend contract, and verification."
   },
@@ -105,7 +105,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-25",
+    "due": "2026-07-03",
     "docId": "code-guidelines",
     "notes": "Practice leading with bugs and risks before summaries or praise."
   },
@@ -129,7 +129,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-27",
+    "due": "2026-07-06",
     "docId": "code-guidelines",
     "notes": "Do not include PII or learner-generated speech content in breadcrumb data."
   },
@@ -141,7 +141,7 @@
     "status": "Todo",
     "assignee": "Yaomin",
     "assignedBy": "Tamil",
-    "due": "2026-06-28",
+    "due": "2026-07-08",
     "docId": "collaboration-guidelines",
     "notes": "Summarize what is understood, what is still ambiguous, and where Tamil needs to make a decision."
   }
