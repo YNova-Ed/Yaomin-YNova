@@ -35,7 +35,7 @@ const AUTH_ACCOUNTS = [
     email: 'Yaomin@ynova.ai',
     name: 'Yaomin',
     role: 'Product Intern',
-    passwordHash: 'ec0364d3eda81900bdd7ab14a3cf7d0c3e4ac301b8d274fa7ce3cecea39577bf',
+    passwordHash: 'cc178fe7d1fc2dbb2b313c2a2fe508845a24d9032f6daf94d4c3d7a8a1adde2a',
   },
 ]
 marked.use({
