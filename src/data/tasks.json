@@ -39,6 +39,19 @@
     "reviewLog": []
   },
   {
+    "id": "task-beginner-visual-handbook",
+    "title": "Read the beginner visual handbook and explain the app back in simple terms",
+    "area": "Onboarding",
+    "priority": "High",
+    "status": "Todo",
+    "assignee": "Yaomin",
+    "assignedBy": "Tamil",
+    "due": "2026-06-27",
+    "docId": "ynova-mbs-beginner-visual-handbook",
+    "notes": "Use the diagrams to explain the product loop, folder map, request lifecycle, trust boundary, AI roles, mobile packaging, and first-week learning plan without using jargon.",
+    "reviewLog": []
+  },
+  {
     "id": "task-architecture-read",
     "title": "Read the YNova MBS architecture overview and write five questions",
     "area": "Product",

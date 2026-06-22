@@ -44,6 +44,17 @@
     "tags": ["onboarding", "intern", "mbs", "book", "architecture", "capacitor"]
   },
   {
+    "id": "ynova-mbs-beginner-visual-handbook",
+    "title": "YNova MBS Beginner Visual Handbook",
+    "section": "Onboarding",
+    "path": "docs/onboarding/ynova_mbs_beginner_visual_handbook.md",
+    "summary": "A visual start-here handbook for new interns, with plain-language explanations, SVG diagrams, request flows, codebase maps, trust boundaries, debugging paths, AI roles, mobile packaging, and first-week learning steps.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-22",
+    "tags": ["onboarding", "beginner", "visual", "mbs", "architecture", "codebase-map"]
+  },
+  {
     "id": "code-guidelines",
     "title": "Engineering Code Guidelines",
     "section": "Engineering",
