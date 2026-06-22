@@ -33,6 +33,17 @@
     "tags": ["onboarding", "handoff", "mbs", "review", "architecture"]
   },
   {
+    "id": "ynova-mbs-intern-book",
+    "title": "YNova MBS Intern Book",
+    "section": "Onboarding",
+    "path": "docs/onboarding/ynova_mbs_intern_book.md",
+    "summary": "A 0-to-100 intern book covering YNova MBS fundamentals, product architecture, codebase structure, implementation rationale, Capacitor, scenarios, review habits, and diagrams.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-22",
+    "tags": ["onboarding", "intern", "mbs", "book", "architecture", "capacitor"]
+  },
+  {
     "id": "code-guidelines",
     "title": "Engineering Code Guidelines",
     "section": "Engineering",
@@ -42,6 +53,17 @@
     "owner": "Tamil",
     "updated": "2026-06-14",
     "tags": ["engineering", "git", "quality"]
+  },
+  {
+    "id": "ynova-mbs-capacitor-technical-guide",
+    "title": "YNova MBS Capacitor Technical Guide",
+    "section": "Engineering",
+    "path": "docs/engineering/ynova_mbs_capacitor_technical_guide.md",
+    "summary": "Technical guide for how Capacitor wraps the MBS web app for Android and iOS, including permissions, auth redirects, audio, app resume, native risk, and release review.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-22",
+    "tags": ["engineering", "capacitor", "mobile", "android", "ios", "technical-guide"]
   },
   {
     "id": "ynova-mbs-architecture",
@@ -97,5 +119,16 @@
     "owner": "Tamil",
     "updated": "2026-06-14",
     "tags": ["nova", "mascot", "theme", "design"]
+  },
+  {
+    "id": "ynova-mbs-design-system-guide",
+    "title": "YNova MBS Design System Guide",
+    "section": "Design",
+    "path": "docs/design/ynova_mbs_design_system_guide.md",
+    "summary": "Design guide for Clay Bright, NOVA state usage, screen review principles, accessibility, product copy, and intern design review exercises.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-22",
+    "tags": ["design", "nova", "clay-bright", "accessibility", "review"]
   }
 ]
