@@ -38,21 +38,6 @@ const AUTH_ACCOUNTS = [
     passwordHash: 'ec0364d3eda81900bdd7ab14a3cf7d0c3e4ac301b8d274fa7ce3cecea39577bf',
   },
 ]
-const NOVA_POSES = [
-  'idle',
-  'wave',
-  'listening',
-  'thinking',
-  'encouraging',
-  'celebrating',
-  'correcting',
-  'reading',
-  'pointing',
-  'sleeping',
-  'surprised',
-  'apologetic',
-]
-
 marked.use({
   gfm: true,
   breaks: false,
@@ -74,6 +59,8 @@ const state = {
   },
   selectedDocId: 'ynova-mbs-architecture',
   selectedTaskId: null,
+  activeView: 'read',
+  navOpen: false,
   statusFilter: 'All',
   query: '',
   markdown: '',
@@ -96,6 +83,8 @@ app.addEventListener('click', (event) => {
   if (!state.session && actionButton?.dataset.action !== 'theme') return
 
   if (docButton) {
+    state.activeView = 'read'
+    state.navOpen = false
     selectDoc(docButton.dataset.docId)
     return
   }
@@ -103,6 +92,8 @@ app.addEventListener('click', (event) => {
   if (taskButton && taskButton.dataset.taskId) {
     state.selectedTaskId = taskButton.dataset.taskId
     state.selectedDocId = findTask(taskButton.dataset.taskId)?.docId || state.selectedDocId
+    state.activeView = 'read'
+    state.navOpen = false
     render()
     return
   }
@@ -112,6 +103,15 @@ app.addEventListener('click', (event) => {
   const action = actionButton.dataset.action
   if (action === 'filter') {
     state.statusFilter = actionButton.dataset.status || 'All'
+    render()
+  }
+  if (action === 'view') {
+    state.activeView = actionButton.dataset.view === 'manage' ? 'manage' : 'read'
+    state.navOpen = false
+    render()
+  }
+  if (action === 'toggle-nav') {
+    state.navOpen = !state.navOpen
     render()
   }
   if (action === 'delete-task') {
@@ -266,20 +266,17 @@ function render() {
     .slice(0, 3)
 
   app.innerHTML = `
-    <div class="app-shell">
+    <div class="app-shell ${state.navOpen ? 'nav-is-open' : ''}">
       ${renderSidebar(selectedDoc)}
+      <button class="mobile-nav-backdrop" type="button" data-action="toggle-nav" aria-label="Close navigation"></button>
       <main class="workspace" id="main-content">
-        ${renderHeader(stats)}
-        ${renderOverview(stats)}
-        ${renderSharedUpdates()}
-        ${renderMascotStrip()}
-        ${renderNextFocus(nextFocus)}
-        ${renderAssignmentConsole()}
-        ${renderReviewDesk()}
-        ${renderTaskBoard(filteredTasks)}
-        ${renderMarkdownPanel(selectedDoc)}
+        ${renderTopBar()}
+        ${renderHeader()}
+        ${renderProgressStrip(stats)}
+        ${state.activeView === 'manage'
+          ? renderManageView(filteredTasks)
+          : renderReadView(selectedDoc, selectedTask, nextFocus)}
       </main>
-      ${renderDetailPanel(selectedDoc, selectedTask)}
     </div>
   `
 
@@ -350,12 +347,17 @@ function renderSidebar(selectedDoc) {
   return `
     <aside class="sidebar" aria-label="Knowledge base navigation">
       <a class="skip-link" href="#main-content">Skip to main content</a>
-      <div class="brand-row">
-        <img src="${assetUrl('nova-brand/nova-mark-transparent-2048.png')}" alt="" />
-        <div>
-          <strong>YNova</strong>
-          <span>Yaomin Hub</span>
+      <div class="sidebar-top">
+        <div class="brand-row">
+          <img src="${assetUrl('nova-brand/nova-mark-transparent-2048.png')}" alt="" />
+          <div>
+            <strong>YNova</strong>
+            <span>Yaomin Hub</span>
+          </div>
         </div>
+        <button class="icon-button nav-close" type="button" data-action="toggle-nav" aria-label="Close navigation">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
       </div>
       <div class="signed-in-card">
         <img src="${assetUrl(state.session.name === 'Tamil' ? 'nova-poses/pointing.png' : 'nova-poses/reading.png')}" alt="" />
@@ -384,7 +386,55 @@ function renderSidebar(selectedDoc) {
   `
 }
 
-function renderHeader(stats) {
+function renderTopBar() {
+  return `
+    <nav class="topbar" aria-label="Primary workspace controls">
+      <button class="icon-button nav-toggle" type="button" data-action="toggle-nav" aria-label="Open navigation">
+        <i data-lucide="menu" aria-hidden="true"></i>
+      </button>
+      <div class="topbar-title">
+        <strong>YNova Hub</strong>
+        <span>${state.activeView === 'manage' ? 'Manage work' : 'Read and focus'}</span>
+      </div>
+      ${renderViewTabs()}
+      <a class="secondary-button topbar-github" href="${GITHUB_WEB_URL}" target="_blank" rel="noreferrer">
+        <i data-lucide="github" aria-hidden="true"></i>
+        <span>GitHub</span>
+      </a>
+    </nav>
+  `
+}
+
+function renderViewTabs() {
+  return `
+    <div class="view-tabs" role="tablist" aria-label="Workspace view">
+      <button
+        type="button"
+        role="tab"
+        aria-selected="${state.activeView === 'read'}"
+        class="${state.activeView === 'read' ? 'is-active' : ''}"
+        data-action="view"
+        data-view="read"
+      >
+        <i data-lucide="book-open" aria-hidden="true"></i>
+        <span>Read</span>
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected="${state.activeView === 'manage'}"
+        class="${state.activeView === 'manage' ? 'is-active' : ''}"
+        data-action="view"
+        data-view="manage"
+      >
+        <i data-lucide="layout-dashboard" aria-hidden="true"></i>
+        <span>Manage</span>
+      </button>
+    </div>
+  `
+}
+
+function renderHeader() {
   return `
     <header class="page-header">
       <div>
@@ -392,17 +442,70 @@ function renderHeader(stats) {
         <h1>Yaomin Onboarding</h1>
         <p class="lede">A focused handoff hub for learning YNova MBS, shipping product work, and collaborating with AI agents responsibly.</p>
       </div>
-      <div class="header-actions">
-        <div class="mini-metric">
-          <span>Completion</span>
-          <strong>${stats.completion}%</strong>
-        </div>
-        <a class="primary-button" href="${GITHUB_WEB_URL}" target="_blank" rel="noreferrer">
-          <i data-lucide="github" aria-hidden="true"></i>
-          <span>GitHub</span>
-        </a>
-      </div>
     </header>
+  `
+}
+
+function renderProgressStrip(stats) {
+  const items = [
+    { label: 'Done', value: stats.done, tone: 'green' },
+    { label: 'In Progress', value: stats.inProgress, tone: 'sky' },
+    { label: 'In Review', value: stats.inReview, tone: 'amber' },
+    { label: 'Todo', value: stats.todo, tone: 'neutral' },
+  ]
+
+  return `
+    <section class="progress-strip" aria-label="Task progress">
+      <div class="progress-summary">
+        <span>Completion</span>
+        <strong>${stats.completion}%</strong>
+      </div>
+      <div class="progress-items">
+        ${items.map((item) => `
+          <div class="progress-item progress-${item.tone}">
+            <span class="priority-dot priority-${item.tone === 'green' ? 'low' : item.tone === 'amber' ? 'medium' : item.tone === 'sky' ? 'progress' : 'neutral'}"></span>
+            <strong>${item.value}</strong>
+            <span>${item.label}</span>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+  `
+}
+
+function renderReadView(selectedDoc, selectedTask, nextFocus) {
+  return `
+    <div class="read-layout">
+      <div class="read-primary">
+        ${renderNextFocus(nextFocus)}
+        ${renderMarkdownPanel(selectedDoc)}
+      </div>
+      <aside class="read-context" aria-label="Selected document context">
+        ${selectedTask ? renderSelectedTaskCard(selectedTask) : ''}
+        ${renderDocSummaryCard(selectedDoc)}
+        ${renderLinkedTasksCard(selectedDoc)}
+      </aside>
+    </div>
+  `
+}
+
+function renderManageView(filteredTasks) {
+  return `
+    <div class="manage-layout">
+      <section class="panel manage-intro" aria-labelledby="manage-title">
+        <div>
+          <p class="eyebrow">Manage</p>
+          <h2 id="manage-title">Shared work, local tasks, and review tools.</h2>
+          <p>Use this view when you need to sync GitHub Issues, assign local work, add review notes, or update task status.</p>
+        </div>
+      </section>
+      ${renderSharedUpdates()}
+      <div class="tool-grid">
+        ${renderAssignmentConsole()}
+        ${renderReviewDesk()}
+      </div>
+      ${renderTaskBoard(filteredTasks)}
+    </div>
   `
 }
 
@@ -481,50 +584,6 @@ function renderSharedUpdates() {
   `
 }
 
-function renderOverview(stats) {
-  const cards = [
-    { label: 'Done', value: stats.done, total: stats.total, icon: 'check-circle-2', tone: 'green' },
-    { label: 'In Progress', value: stats.inProgress, total: stats.total, icon: 'loader-circle', tone: 'sky' },
-    { label: 'In Review', value: stats.inReview, total: stats.total, icon: 'scan-search', tone: 'amber' },
-    { label: 'Todo', value: stats.todo, total: stats.total, icon: 'circle', tone: 'neutral' },
-  ]
-
-  return `
-    <section class="overview-grid" aria-label="Task progress">
-      ${cards.map((card) => `
-        <article class="metric-card metric-${card.tone}">
-          <div class="metric-icon"><i data-lucide="${card.icon}" aria-hidden="true"></i></div>
-          <div>
-            <p>${card.label}</p>
-            <strong>${card.value}</strong>
-            <span>${card.total === 0 ? 0 : Math.round((card.value / card.total) * 100)}% of tasks</span>
-          </div>
-        </article>
-      `).join('')}
-    </section>
-  `
-}
-
-function renderMascotStrip() {
-  return `
-    <section class="mascot-band" aria-labelledby="nova-states-title">
-      <div class="mascot-copy">
-        <p class="eyebrow">YNova mascot system</p>
-        <h2 id="nova-states-title">NOVA states are included for product handoff context.</h2>
-        <p>Use the mascot as a learning and emotional-state signal, not as decoration. The dashboard ships all current MBS pose assets.</p>
-      </div>
-      <div class="pose-strip" aria-label="NOVA mascot states">
-        ${NOVA_POSES.map((pose) => `
-          <figure class="pose-card">
-            <img src="${assetUrl(`nova-poses/${pose}.png`)}" alt="NOVA ${pose} state" loading="eager" decoding="sync" fetchpriority="high" />
-            <figcaption>${escapeHtml(titleCase(pose))}</figcaption>
-          </figure>
-        `).join('')}
-      </div>
-    </section>
-  `
-}
-
 function renderNextFocus(tasks) {
   return `
     <section class="panel next-focus" aria-labelledby="next-focus-title">
@@ -550,13 +609,15 @@ function renderNextFocus(tasks) {
 
 function renderAssignmentConsole() {
   return `
-    <section class="panel assignment-console" aria-labelledby="assignment-title">
-      <div class="section-heading">
+    <details class="panel tool-panel assignment-console">
+      <summary>
         <div>
-          <h2 id="assignment-title">Tamil Assignment Console</h2>
+          <h2>Assign Local Task</h2>
           <p>Add a new local task for Yaomin. Changes are saved in this browser.</p>
-          <p class="inline-note">Current author: ${escapeHtml(state.session.name)}</p>
         </div>
+        <i data-lucide="chevron-down" aria-hidden="true"></i>
+      </summary>
+      <div class="tool-body">
         <div class="button-row">
           <button class="secondary-button" type="button" data-action="export-tasks">
             <i data-lucide="download" aria-hidden="true"></i>
@@ -567,7 +628,7 @@ function renderAssignmentConsole() {
             <span>Reset seed</span>
           </button>
         </div>
-      </div>
+        <p class="inline-note">Current author: ${escapeHtml(state.session.name)}</p>
       <form class="task-form" data-add-task-form>
         <label>
           <span>Task title</span>
@@ -598,7 +659,8 @@ function renderAssignmentConsole() {
           <span>Assign task</span>
         </button>
       </form>
-    </section>
+      </div>
+    </details>
   `
 }
 
@@ -606,14 +668,15 @@ function renderReviewDesk() {
   const openTasks = state.tasks.filter((task) => task.status !== 'Done')
   const tasksForSelect = openTasks.length > 0 ? openTasks : state.tasks
   return `
-    <section class="panel review-desk" aria-labelledby="review-desk-title">
-      <div class="section-heading">
+    <details class="panel tool-panel review-desk">
+      <summary>
         <div>
-          <h2 id="review-desk-title">Review Desk</h2>
+          <h2>Review Desk</h2>
           <p>Tamil and Yaomin can add review notes, mark work in review, or close tasks after verification.</p>
         </div>
-        <i data-lucide="message-square-text" aria-hidden="true"></i>
-      </div>
+        <i data-lucide="chevron-down" aria-hidden="true"></i>
+      </summary>
+      <div class="tool-body">
       <form class="review-form" data-review-form>
         <label>
           <span>Task</span>
@@ -636,7 +699,8 @@ function renderReviewDesk() {
           <span>Add review</span>
         </button>
       </form>
-    </section>
+      </div>
+    </details>
   `
 }
 
@@ -675,9 +739,39 @@ function renderTaskBoard(tasks) {
             ${tasks.map((task) => renderTaskRow(task)).join('')}
           </tbody>
         </table>
-        ${tasks.length === 0 ? '<p class="empty-state">No tasks match this filter.</p>' : ''}
       </div>
+      <div class="task-card-list">
+        ${tasks.map((task) => renderTaskCard(task)).join('')}
+      </div>
+      ${tasks.length === 0 ? '<p class="empty-state">No tasks match this filter.</p>' : ''}
     </section>
+  `
+}
+
+function renderTaskCard(task) {
+  const doc = findDoc(task.docId)
+  return `
+    <article class="task-card-mobile">
+      <button class="task-title-button" type="button" data-task-id="${escapeHtml(task.id)}">
+        <i data-lucide="list-checks" aria-hidden="true"></i>
+        <span>${escapeHtml(task.title)}</span>
+      </button>
+      <p>${escapeHtml(doc?.title || task.area)} · Due ${escapeHtml(task.due)}</p>
+      <div class="task-card-controls">
+        <label>
+          <span>Priority</span>
+          <select data-priority-select data-id="${escapeAttribute(task.id)}" aria-label="Priority for ${escapeAttribute(task.title)}">
+            ${PRIORITY_ORDER.map((priority) => `<option value="${priority}" ${priority === task.priority ? 'selected' : ''}>${priority}</option>`).join('')}
+          </select>
+        </label>
+        <label>
+          <span>Status</span>
+          <select data-status-select data-id="${escapeAttribute(task.id)}" aria-label="Status for ${escapeAttribute(task.title)}">
+            ${STATUS_ORDER.map((status) => `<option value="${status}" ${status === task.status ? 'selected' : ''}>${status}</option>`).join('')}
+          </select>
+        </label>
+      </div>
+    </article>
   `
 }
 
@@ -740,88 +834,60 @@ function renderMarkdownPanel(doc) {
   `
 }
 
-function renderDetailPanel(doc, task) {
-  const linkedTasks = state.tasks.filter((item) => item.docId === doc.id)
+function renderDocSummaryCard(doc) {
   return `
-    <aside class="detail-panel" aria-label="Context panel">
-      <div class="detail-card">
-        ${task ? renderTaskDetail(task) : renderDocDetail(doc, linkedTasks)}
-      </div>
-    </aside>
-  `
-}
-
-function renderDocDetail(doc, linkedTasks) {
-  return `
-    <div class="detail-header">
+    <section class="panel context-card">
       <p class="eyebrow">${escapeHtml(doc.section)}</p>
       <h2>${escapeHtml(doc.title)}</h2>
-      <span class="status-badge approved">${escapeHtml(doc.status)}</span>
-    </div>
-    <dl class="meta-list">
-      <div><dt>Owner</dt><dd>${escapeHtml(doc.owner)}</dd></div>
-      <div><dt>Updated</dt><dd>${escapeHtml(doc.updated)}</dd></div>
-      <div><dt>Format</dt><dd>Markdown</dd></div>
-    </dl>
-    <p class="detail-summary">${escapeHtml(doc.summary)}</p>
-    <div class="tag-list">
-      ${(doc.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}
-    </div>
-    <hr />
-    <h3>Linked Tasks</h3>
-    <div class="linked-list">
-      ${linkedTasks.map((task) => `
-        <button type="button" data-task-id="${escapeHtml(task.id)}">
-          <span class="priority-dot priority-${task.priority.toLowerCase()}"></span>
-          <span>${escapeHtml(task.title)}</span>
-          <strong>${escapeHtml(task.status)}</strong>
-        </button>
-      `).join('')}
-    </div>
+      <p>${escapeHtml(doc.summary)}</p>
+      <dl class="meta-list compact-meta">
+        <div><dt>Owner</dt><dd>${escapeHtml(doc.owner)}</dd></div>
+        <div><dt>Updated</dt><dd>${escapeHtml(doc.updated)}</dd></div>
+      </dl>
+      <div class="tag-list">
+        ${(doc.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}
+      </div>
+    </section>
   `
 }
 
-function renderTaskDetail(task) {
-  const doc = findDoc(task.docId)
+function renderLinkedTasksCard(doc) {
+  const linkedTasks = state.tasks.filter((item) => item.docId === doc.id)
   return `
-    <div class="detail-header">
-      <p class="eyebrow">Task Detail</p>
+    <section class="panel context-card">
+      <div class="section-heading compact-heading">
+        <div>
+          <h2>Related Tasks</h2>
+          <p>${linkedTasks.length} linked to this document.</p>
+        </div>
+      </div>
+      <div class="linked-list">
+        ${linkedTasks.length > 0
+          ? linkedTasks.map((task) => `
+            <button type="button" data-task-id="${escapeHtml(task.id)}">
+              <span class="priority-dot priority-${task.priority.toLowerCase()}"></span>
+              <span>${escapeHtml(task.title)}</span>
+              <strong>${escapeHtml(task.status)}</strong>
+            </button>
+          `).join('')
+          : '<p class="empty-state compact-empty">No local tasks linked yet.</p>'}
+      </div>
+    </section>
+  `
+}
+
+function renderSelectedTaskCard(task) {
+  return `
+    <section class="panel context-card selected-task-card">
+      <p class="eyebrow">Selected task</p>
       <h2>${escapeHtml(task.title)}</h2>
-      <span class="status-badge">${escapeHtml(task.status)}</span>
-    </div>
-    <dl class="meta-list">
-      <div><dt>Assignee</dt><dd>${escapeHtml(task.assignee)}</dd></div>
-      <div><dt>Assigned by</dt><dd>${escapeHtml(task.assignedBy)}</dd></div>
-      <div><dt>Due</dt><dd>${escapeHtml(task.due)}</dd></div>
-      <div><dt>Priority</dt><dd>${escapeHtml(task.priority)}</dd></div>
-    </dl>
-    <p class="detail-summary">${escapeHtml(task.notes)}</p>
-    ${renderReviewLog(task)}
-    <hr />
-    <h3>Knowledge Link</h3>
-    <button class="doc-link-button" type="button" data-doc-id="${escapeHtml(task.docId)}">
-      <i data-lucide="${iconForSection(doc?.section || '')}" aria-hidden="true"></i>
-      <span>${escapeHtml(doc?.title || task.area)}</span>
-    </button>
-  `
-}
-
-function renderReviewLog(task) {
-  const log = Array.isArray(task.reviewLog) ? task.reviewLog : []
-  if (log.length === 0) {
-    return '<p class="review-log-empty">No review notes yet.</p>'
-  }
-  return `
-    <div class="review-log">
-      <h3>Review Notes</h3>
-      ${log.slice().reverse().map((entry) => `
-        <article>
-          <strong>${escapeHtml(entry.by)} moved to ${escapeHtml(entry.status)}</strong>
-          <time>${escapeHtml(formatDateTime(entry.at))}</time>
-          <p>${escapeHtml(entry.note)}</p>
-        </article>
-      `).join('')}
-    </div>
+      <dl class="meta-list compact-meta">
+        <div><dt>Status</dt><dd>${escapeHtml(task.status)}</dd></div>
+        <div><dt>Priority</dt><dd>${escapeHtml(task.priority)}</dd></div>
+        <div><dt>Due</dt><dd>${escapeHtml(task.due)}</dd></div>
+      </dl>
+      <p>${escapeHtml(task.notes)}</p>
+    </section>
   `
 }
 
@@ -1085,10 +1151,6 @@ function formatDateTime(value) {
   } catch {
     return value
   }
-}
-
-function titleCase(value) {
-  return value.replace(/-/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
 }
 
 function escapeHtml(value) {

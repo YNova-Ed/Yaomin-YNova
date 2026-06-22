@@ -4,6 +4,29 @@ Yaomin-YNova is a static GitHub Pages onboarding and product handoff hub for YNo
 
 The site is intentionally static. Task changes are stored in browser localStorage and can be exported as JSON. There is no backend, no user secrets, and no production YNova data in this repository.
 
+## Hosting And GitHub About
+
+Hosted site:
+
+```text
+https://ynova-ed.github.io/Yaomin-YNova/
+```
+
+Recommended GitHub repository About fields:
+
+```text
+Description:
+  Static GitHub Pages onboarding and product handoff hub for YNova MBS.
+
+Website:
+  https://ynova-ed.github.io/Yaomin-YNova/
+
+Topics:
+  ynova, ielts-speaking, onboarding, product-handoff, github-pages, static-site
+```
+
+The hosted site is public/static unless the GitHub repository visibility and Pages settings say otherwise. Do not treat the lightweight login screen as a secure privacy boundary.
+
 ## Authentication
 
 The online hub includes a lightweight login gate for Tamil and Yaomin. It is suitable for reducing casual public access, but it is not real server-side authentication because GitHub Pages serves static files. The password is never stored in plaintext in the source, but static bundles can still be inspected or bypassed by a determined person.
@@ -48,11 +71,14 @@ Yaomin-YNova/
       Claude.md
     design/
       dashboard-concept.png
+      ynova_mbs_design_system_guide.md
       ynova_mascot_and_theme.md
     engineering/
       code_guidelines.md
+      ynova_mbs_capacitor_technical_guide.md
     onboarding/
       collaboration_guidelines.md
+      ynova_mbs_intern_book.md
       ynova_mbs_intern_handoff_review.md
       ynova_full_onboarding_guide.md
     product/

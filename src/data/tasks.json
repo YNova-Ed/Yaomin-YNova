@@ -26,6 +26,19 @@
     "reviewLog": []
   },
   {
+    "id": "task-intern-book-map",
+    "title": "Read the YNova MBS intern book and build a personal codebase map",
+    "area": "Onboarding",
+    "priority": "High",
+    "status": "Todo",
+    "assignee": "Yaomin",
+    "assignedBy": "Tamil",
+    "due": "2026-06-29",
+    "docId": "ynova-mbs-intern-book",
+    "notes": "Use the chapter plan, diagrams, scenario walkthroughs, and glossary to explain the MBS product loop and codebase structure back to Tamil in simple terms.",
+    "reviewLog": []
+  },
+  {
     "id": "task-architecture-read",
     "title": "Read the YNova MBS architecture overview and write five questions",
     "area": "Product",
@@ -96,6 +109,32 @@
     "due": "2026-07-02",
     "docId": "ynova-mbs-architecture",
     "notes": "Tie requirements to current TASK_TODO.md, affected routes, backend contract, and verification."
+  },
+  {
+    "id": "task-capacitor-guide",
+    "title": "Review the Capacitor mobile guide and list platform risks",
+    "area": "Engineering",
+    "priority": "Medium",
+    "status": "Todo",
+    "assignee": "Yaomin",
+    "assignedBy": "Tamil",
+    "due": "2026-07-03",
+    "docId": "ynova-mbs-capacitor-technical-guide",
+    "notes": "Focus on microphone permissions, auth redirects, app resume, safe areas, audio playback, and what must be tested on Android or iOS.",
+    "reviewLog": []
+  },
+  {
+    "id": "task-design-system-review",
+    "title": "Use the design system guide to review one MBS screen",
+    "area": "Design",
+    "priority": "Medium",
+    "status": "Todo",
+    "assignee": "Yaomin",
+    "assignedBy": "Tamil",
+    "due": "2026-07-06",
+    "docId": "ynova-mbs-design-system-guide",
+    "notes": "Pick one screen and check user goal, next action, error state, mobile risk, NOVA state, copy quality, and accessibility.",
+    "reviewLog": []
   },
   {
     "id": "task-code-review",
