@@ -1192,6 +1192,19 @@ tr:last-child td {
   color: var(--muted);
 }
 
+.markdown-body img,
+.markdown-body svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 18px auto;
+}
+
+.markdown-body img {
+  max-height: 360px;
+  object-fit: contain;
+}
+
 .status-badge,
 .tag-list span {
   display: inline-flex;

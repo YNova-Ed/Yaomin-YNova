@@ -5,6 +5,7 @@ const loaders = {
   'ynova-full-onboarding': () => import('../../docs/onboarding/ynova_full_onboarding_guide.md?raw'),
   'ynova-mbs-intern-handoff-review': () => import('../../docs/onboarding/ynova_mbs_intern_handoff_review.md?raw'),
   'ynova-mbs-intern-book': () => import('../../docs/onboarding/ynova_mbs_intern_book.md?raw'),
+  'ynova-mbs-beginner-visual-handbook': () => import('../../docs/onboarding/ynova_mbs_beginner_visual_handbook.md?raw'),
   'code-guidelines': () => import('../../docs/engineering/code_guidelines.md?raw'),
   'ynova-mbs-capacitor-technical-guide': () => import('../../docs/engineering/ynova_mbs_capacitor_technical_guide.md?raw'),
   'ynova-mbs-architecture': () => import('../../docs/product/ynova_mbs_architecture.md?raw'),

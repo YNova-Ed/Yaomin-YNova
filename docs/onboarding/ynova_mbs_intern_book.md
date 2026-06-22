@@ -6,6 +6,8 @@ This book is the 0 to 100 guide for a YNova MBS intern. It explains the product,
 
 It is intentionally written in simple terms first, then deeper technical terms. Read it in passes:
 
+If you are completely new to the app, read `YNova MBS Beginner Visual Handbook` first. It gives the visual map. This book gives the deeper handoff detail.
+
 1. Read chapters 1 to 4 to understand what YNova MBS is.
 2. Read chapters 5 to 9 to understand how the codebase is organized.
 3. Read chapters 10 to 14 before reviewing or writing product requirements.

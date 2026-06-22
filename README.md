@@ -78,6 +78,7 @@ Yaomin-YNova/
       ynova_mbs_capacitor_technical_guide.md
     onboarding/
       collaboration_guidelines.md
+      ynova_mbs_beginner_visual_handbook.md
       ynova_mbs_intern_book.md
       ynova_mbs_intern_handoff_review.md
       ynova_full_onboarding_guide.md
