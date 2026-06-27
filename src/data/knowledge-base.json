@@ -77,6 +77,17 @@
     "tags": ["engineering", "capacitor", "mobile", "android", "ios", "technical-guide"]
   },
   {
+    "id": "ynova-mbs-weekly-mobile-test-plan",
+    "title": "YNova MBS Weekly Mobile Test And Publish Readiness Plan",
+    "section": "Engineering",
+    "path": "docs/engineering/ynova_mbs_weekly_mobile_test_plan.md",
+    "summary": "Yaomin's weekly mobile assignment for running the YNova MBS Capacitor app on Android and iOS, collecting screenshot evidence, reviewing risks, and documenting publish readiness.",
+    "status": "Approved",
+    "owner": "Tamil",
+    "updated": "2026-06-28",
+    "tags": ["engineering", "capacitor", "mobile", "android", "ios", "screenshots", "release"]
+  },
+  {
     "id": "ynova-mbs-architecture",
     "title": "YNova MBS Architecture",
     "section": "Product",

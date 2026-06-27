@@ -137,6 +137,19 @@
     "reviewLog": []
   },
   {
+    "id": "task-ynova-mbs-mobile-capacitor-test-week",
+    "title": "Run YNova MBS on Capacitor for Android and iOS and publish a mobile test review",
+    "area": "Engineering",
+    "priority": "High",
+    "status": "Todo",
+    "assignee": "Yaomin",
+    "assignedBy": "Tamil",
+    "due": "2026-07-03",
+    "docId": "ynova-mbs-weekly-mobile-test-plan",
+    "notes": "This is Yaomin's main task for the week of 2026-06-29. First research the YNova MBS app and Capacitor setup, then run the app on Android and iOS, collect screenshot evidence, complete the mobile checklist, document what works and what needs engineering attention, and include a publish-readiness recommendation. Do not include production learner data, secrets, transcripts, recordings, billing data, or private screenshots.",
+    "reviewLog": []
+  },
+  {
     "id": "task-design-system-review",
     "title": "Use the design system guide to review one MBS screen",
     "area": "Design",
